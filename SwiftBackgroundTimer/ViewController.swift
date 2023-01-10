@@ -11,6 +11,8 @@ import UIKit
 final class ViewController: UIViewController {
     @IBOutlet private var textField: UITextField!
     @IBOutlet private var button: UIButton!
+    @IBOutlet weak var repeatingSwitch: UISwitch!
+    
     lazy var timer = BackgroundTimer()
     var interval: TimeInterval? {
         guard let text = textField.text,
@@ -37,7 +39,7 @@ final class ViewController: UIViewController {
             return
         }
         print("Starting \(interval) seconds countdown.")
-        timer.executeAfterDelay(delay: interval, repeating: true) {
+        timer.executeAfterDelay(delay: interval, repeating: repeatingSwitch.isOn) {
             print("\(interval) seconds have passed, executing code block.")
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
