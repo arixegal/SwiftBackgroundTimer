@@ -41,7 +41,7 @@ final class BackgroundTimer {
                              completion: completion
                         )
                     } else {
-                        print("Failed to repeat")
+                        print("Failed to repeat, most probably because the BackgroundTimer instance is de-allocated. Make sure you keep a reference to the BackgroundTimer instance in memory.")
                         UIApplication.shared.endBackgroundTask(backgroundTaskId) // Clearing
                     }
                 } else {
