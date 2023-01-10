@@ -13,6 +13,7 @@
 		DEA0384F296D8D9600BF633C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEA0384D296D8D9600BF633C /* Main.storyboard */; };
 		DEA03851296D8D9800BF633C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEA03850296D8D9800BF633C /* Assets.xcassets */; };
 		DEA03854296D8D9800BF633C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DEA03852296D8D9800BF633C /* LaunchScreen.storyboard */; };
+		DEA0385D296D9E2F00BF633C /* BackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA0385C296D9E2F00BF633C /* BackgroundTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		DEA03850296D8D9800BF633C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEA03853296D8D9800BF633C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DEA03855296D8D9800BF633C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DEA0385C296D9E2F00BF633C /* BackgroundTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		DEA03846296D8D9600BF633C /* SwiftBackgroundTimer */ = {
 			isa = PBXGroup;
 			children = (
+				DEA0385B296D9E0300BF633C /* BackgroundTimerClass */,
 				DEA03847296D8D9600BF633C /* AppDelegate.swift */,
 				DEA03849296D8D9600BF633C /* SceneDelegate.swift */,
 				DEA0384B296D8D9600BF633C /* ViewController.swift */,
@@ -65,6 +68,14 @@
 				DEA03855296D8D9800BF633C /* Info.plist */,
 			);
 			path = SwiftBackgroundTimer;
+			sourceTree = "<group>";
+		};
+		DEA0385B296D9E0300BF633C /* BackgroundTimerClass */ = {
+			isa = PBXGroup;
+			children = (
+				DEA0385C296D9E2F00BF633C /* BackgroundTimer.swift */,
+			);
+			path = BackgroundTimerClass;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEA0384C296D8D9600BF633C /* ViewController.swift in Sources */,
+				DEA0385D296D9E2F00BF633C /* BackgroundTimer.swift in Sources */,
 				DEA03848296D8D9600BF633C /* AppDelegate.swift in Sources */,
 				DEA0384A296D8D9600BF633C /* SceneDelegate.swift in Sources */,
 			);
@@ -287,7 +299,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = E7X6V24436;
+				DEVELOPMENT_TEAM = QE7R3G33AZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftBackgroundTimer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

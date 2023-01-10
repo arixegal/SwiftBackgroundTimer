@@ -11,6 +11,14 @@ final class ViewController: UIViewController {
     @IBOutlet private var textField: UITextField!
     @IBOutlet private var button: UIButton!
     
+    var interval: TimeInterval? {
+        guard let text = textField.text,
+              !text.isEmpty else {
+            return nil
+        }
+        return TimeInterval(text)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.becomeFirstResponder()
@@ -18,17 +26,19 @@ final class ViewController: UIViewController {
 
 
     @IBAction private func textFieldEditingChanged(_ sender: UITextField) {
-        guard let text = sender.text,
-              !text.isEmpty,
-              let _ = TimeInterval(text) else {
-            button.isEnabled = false
-            return
-        }
+            button.isEnabled = interval != nil
     }
     
     
     @IBAction private func btnTap(_ sender: UIButton) {
-        print("Starting countdown")
+        guard let interval else {
+            print("Invalid timer value")
+            return
+        }
+        print("Starting \(interval) seconds countdown.")
+        BackgroundTimer().executeAfterDelay(delay: interval) {
+            print("\(interval) seconds have passed, executing code block.")
+        }
     }
 }
 
