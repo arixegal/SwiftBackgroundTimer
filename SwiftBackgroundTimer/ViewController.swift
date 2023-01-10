@@ -5,6 +5,7 @@
 //  Created by Arik Segal on 10/01/2023.
 //
 
+import AudioToolbox
 import UIKit
 
 final class ViewController: UIViewController {
@@ -38,6 +39,7 @@ final class ViewController: UIViewController {
         print("Starting \(interval) seconds countdown.")
         BackgroundTimer().executeAfterDelay(delay: interval) {
             print("\(interval) seconds have passed, executing code block.")
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
     }
 }
