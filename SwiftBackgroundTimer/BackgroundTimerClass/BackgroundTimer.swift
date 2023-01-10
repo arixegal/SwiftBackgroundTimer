@@ -8,14 +8,21 @@
 import UIKit
 
 final class BackgroundTimer {    
-    func executeAfterDelay(delay: TimeInterval, completion: @escaping(()->Void)){
+    func executeAfterDelay(delay: TimeInterval, repeating: Bool, completion: @escaping(()->Void)) {
         var backgroundTaskId = UIBackgroundTaskIdentifier.invalid
         backgroundTaskId = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(backgroundTaskId) // The expiration Handler
         }
         
         // -- The task itself: Wait and then execute --
-        
+        wait(delay: delay,
+             repeating: repeating,
+             backgroundTaskId: backgroundTaskId,
+             completion: completion
+        )
+    }
+    
+    private func wait(delay: TimeInterval, repeating: Bool, backgroundTaskId: UIBackgroundTaskIdentifier, completion: @escaping(()->Void)) {
         let startTime = Date()
         DispatchQueue.global(qos: .background).async {
             // Waiting
@@ -24,9 +31,22 @@ final class BackgroundTimer {
             }
             
             // Executing
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 completion()
-                UIApplication.shared.endBackgroundTask(backgroundTaskId) // Clearing
+                if repeating {
+                    if let self {
+                        self.wait(delay: delay,
+                             repeating: repeating,
+                             backgroundTaskId: backgroundTaskId,
+                             completion: completion
+                        )
+                    } else {
+                        print("Failed to repeat")
+                        UIApplication.shared.endBackgroundTask(backgroundTaskId) // Clearing
+                    }
+                } else {
+                    UIApplication.shared.endBackgroundTask(backgroundTaskId) // Clearing
+                }
             }
         }
     }

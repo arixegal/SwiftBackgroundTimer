@@ -37,7 +37,7 @@ final class ViewController: UIViewController {
             return
         }
         print("Starting \(interval) seconds countdown.")
-        BackgroundTimer().executeAfterDelay(delay: interval) {
+        BackgroundTimer().executeAfterDelay(delay: interval, repeating: false) {
             print("\(interval) seconds have passed, executing code block.")
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
