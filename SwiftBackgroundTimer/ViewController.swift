@@ -7,13 +7,28 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+final class ViewController: UIViewController {
+    @IBOutlet private var textField: UITextField!
+    @IBOutlet private var button: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        textField.becomeFirstResponder()
     }
 
 
+    @IBAction private func textFieldEditingChanged(_ sender: UITextField) {
+        guard let text = sender.text,
+              !text.isEmpty,
+              let _ = TimeInterval(text) else {
+            button.isEnabled = false
+            return
+        }
+    }
+    
+    
+    @IBAction private func btnTap(_ sender: UIButton) {
+        print("Starting countdown")
+    }
 }
 
