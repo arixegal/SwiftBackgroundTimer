@@ -7,19 +7,6 @@
 
 import UIKit
 
-private actor TasksToCancel {
-    private var tasksToCancel: Set<UIBackgroundTaskIdentifier> = []
-    func add(tasks: [UIBackgroundTaskIdentifier]) {
-        tasks.forEach {
-            tasksToCancel.insert($0)
-        }
-    }
-    
-    func contains(task: UIBackgroundTaskIdentifier) -> Bool {
-        tasksToCancel.contains(task)
-    }
-}
-
 protocol BackgroundTimerDelegate: AnyObject {
     func backgroundTimerTaskExecuted(task: UIBackgroundTaskIdentifier, willRepeat: Bool)
     func backgroundTimerTaskCanceled(task: UIBackgroundTaskIdentifier)
