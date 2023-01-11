@@ -16,7 +16,7 @@ final class ViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     var tasks: [UIBackgroundTaskIdentifier] = []
-    lazy var timer = BackgroundTimer()
+    lazy var timer = BackgroundTimer(delegate: self)
     var interval: TimeInterval? {
         guard let text = textField.text,
               !text.isEmpty else {
@@ -76,5 +76,25 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         return nil
+    }
+}
+
+extension ViewController: BackgroundTimerDelegate {
+    func backgroundTimerTaskExecuted(task: UIBackgroundTaskIdentifier, willRepeat: Bool) {
+        guard !willRepeat else {
+            return
+        }
+        
+        guard let row = tasks.firstIndex(of: task) else {
+            return assertionFailure()
+        }
+        
+        tasks.remove(at: row)
+        tableView.performBatchUpdates {
+            tableView.deleteRows(at: [IndexPath(row: row, section: 0)], with: .automatic)
+        }
+    }
+    
+    func backgroundTimerTaskCanceled(task: UIBackgroundTaskIdentifier) {
     }
 }

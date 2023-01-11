@@ -302,6 +302,7 @@
 				DEVELOPMENT_TEAM = QE7R3G33AZ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftBackgroundTimer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BGTimerDemo;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -330,6 +331,7 @@
 				DEVELOPMENT_TEAM = E7X6V24436;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftBackgroundTimer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BGTimerDemo;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

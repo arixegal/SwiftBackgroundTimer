@@ -7,8 +7,18 @@
 
 import UIKit
 
+protocol BackgroundTimerDelegate: AnyObject {
+    func backgroundTimerTaskExecuted(task: UIBackgroundTaskIdentifier, willRepeat: Bool)
+    func backgroundTimerTaskCanceled(task: UIBackgroundTaskIdentifier)
+}
+
 final class BackgroundTimer {    
+    weak var delegate: BackgroundTimerDelegate?
     private var tasksToCancel: Set<UIBackgroundTaskIdentifier> = [] // To do: thread safety, will think about it later
+    
+    init(delegate: BackgroundTimerDelegate?) {
+        self.delegate = delegate
+    }
     
     func executeAfterDelay(delay: TimeInterval, repeating: Bool, completion: @escaping(()->Void)) -> UIBackgroundTaskIdentifier {
         var backgroundTaskId = UIBackgroundTaskIdentifier.invalid
@@ -30,11 +40,13 @@ final class BackgroundTimer {
     }
     
     private func wait(delay: TimeInterval, repeating: Bool, backgroundTaskId: UIBackgroundTaskIdentifier, completion: @escaping(()->Void)) {
-        let startTime = Date()
         guard !tasksToCancel.contains(backgroundTaskId) else {
             print("Aborting task \(backgroundTaskId)")
+            delegate?.backgroundTimerTaskCanceled(task: backgroundTaskId)
             return
         }
+
+        let startTime = Date()
 
         DispatchQueue.global(qos: .background).async {
             // Waiting
@@ -47,10 +59,12 @@ final class BackgroundTimer {
                 let tasksToCancel = self?.tasksToCancel ?? []
                 guard !tasksToCancel.contains(backgroundTaskId) else {
                     print("Aborting task \(backgroundTaskId)")
+                    self?.delegate?.backgroundTimerTaskCanceled(task: backgroundTaskId)
                     return
                 }
 
                 completion()
+                self?.delegate?.backgroundTimerTaskExecuted(task: backgroundTaskId, willRepeat: repeating)
                 if repeating {
                     if let self {
                         self.wait(delay: delay,
