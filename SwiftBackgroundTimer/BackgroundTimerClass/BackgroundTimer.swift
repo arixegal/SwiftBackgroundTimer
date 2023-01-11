@@ -61,6 +61,7 @@ final class BackgroundTimer {
                 let tasksToCancel = self?.tasksToCancel ?? []
                 guard !tasksToCancel.contains(backgroundTaskId) else {
                     print("Aborting task \(backgroundTaskId)")
+                    UIApplication.shared.endBackgroundTask(backgroundTaskId) // Clearing
                     self?.delegate?.backgroundTimerTaskCanceled(task: backgroundTaskId)
                     return
                 }
