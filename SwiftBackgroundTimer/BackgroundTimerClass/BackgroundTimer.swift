@@ -8,7 +8,7 @@
 import UIKit
 
 final class BackgroundTimer {    
-    func executeAfterDelay(delay: TimeInterval, repeating: Bool, completion: @escaping(()->Void)) {
+    func executeAfterDelay(delay: TimeInterval, repeating: Bool, completion: @escaping(()->Void)) -> UIBackgroundTaskIdentifier {
         var backgroundTaskId = UIBackgroundTaskIdentifier.invalid
         backgroundTaskId = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(backgroundTaskId) // The expiration Handler
@@ -20,6 +20,7 @@ final class BackgroundTimer {
              backgroundTaskId: backgroundTaskId,
              completion: completion
         )
+        return backgroundTaskId
     }
     
     private func wait(delay: TimeInterval, repeating: Bool, backgroundTaskId: UIBackgroundTaskIdentifier, completion: @escaping(()->Void)) {
