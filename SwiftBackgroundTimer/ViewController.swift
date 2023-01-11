@@ -70,7 +70,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        timer.cancelExecution(task: tasks[indexPath.row])
+        timer.cancelExecution(tasks: [tasks[indexPath.row]])
         tasks.remove(at: indexPath.row)
         tableView.performBatchUpdates {
             tableView.deleteRows(at: [indexPath], with: .automatic)

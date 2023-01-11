@@ -35,8 +35,10 @@ final class BackgroundTimer {
         return backgroundTaskId
     }
     
-    func cancelExecution(task: UIBackgroundTaskIdentifier) {
-        tasksToCancel.insert(task)
+    func cancelExecution(tasks: [UIBackgroundTaskIdentifier]) {
+        tasks.forEach {
+            tasksToCancel.insert($0)
+        }
     }
     
     private func wait(delay: TimeInterval, repeating: Bool, backgroundTaskId: UIBackgroundTaskIdentifier, completion: @escaping(()->Void)) {
