@@ -8,6 +8,8 @@
 import UIKit
 
 final class BackgroundTimer {    
+    private var tasksToCancel: Set<UIBackgroundTaskIdentifier> = [] // To do: thread safety, will think about it later
+    
     func executeAfterDelay(delay: TimeInterval, repeating: Bool, completion: @escaping(()->Void)) -> UIBackgroundTaskIdentifier {
         var backgroundTaskId = UIBackgroundTaskIdentifier.invalid
         backgroundTaskId = UIApplication.shared.beginBackgroundTask {
@@ -23,16 +25,31 @@ final class BackgroundTimer {
         return backgroundTaskId
     }
     
+    func cancelExecution(task: UIBackgroundTaskIdentifier) {
+        tasksToCancel.insert(task)
+    }
+    
     private func wait(delay: TimeInterval, repeating: Bool, backgroundTaskId: UIBackgroundTaskIdentifier, completion: @escaping(()->Void)) {
         let startTime = Date()
+        guard !tasksToCancel.contains(backgroundTaskId) else {
+            print("Aborting task \(backgroundTaskId)")
+            return
+        }
+
         DispatchQueue.global(qos: .background).async {
             // Waiting
             while Date().timeIntervalSince(startTime) < delay {
-                Thread.sleep(forTimeInterval: 0.01)
+                Thread.sleep(forTimeInterval: 0.1)
             }
             
             // Executing
             DispatchQueue.main.async { [weak self] in
+                let tasksToCancel = self?.tasksToCancel ?? []
+                guard !tasksToCancel.contains(backgroundTaskId) else {
+                    print("Aborting task \(backgroundTaskId)")
+                    return
+                }
+
                 completion()
                 if repeating {
                     if let self {
