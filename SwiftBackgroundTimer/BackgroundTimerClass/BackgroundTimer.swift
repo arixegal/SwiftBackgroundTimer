@@ -54,6 +54,7 @@ final class BackgroundTimer {
             return cancel(backgroundTaskId: backgroundTaskId)
         }
 
+        print("BackgroundTimer: Starting \(delay) seconds countdown")
         let startTime = Date()
 
         DispatchQueue.global(qos: .background).async { [weak self] in
@@ -69,6 +70,7 @@ final class BackgroundTimer {
                     return
                 }
 
+                print("BackgroundTimer: \(delay) seconds have passed, executing code block.")
                 completion()
                 self?.delegate?.backgroundTimerTaskExecuted(task: backgroundTaskId, willRepeat: repeating)
                 
@@ -80,7 +82,7 @@ final class BackgroundTimer {
                              completion: completion
                         )
                     } else {
-                        print("Failed to repeat, most probably because the BackgroundTimer instance is de-allocated. Make sure you keep a reference to the BackgroundTimer instance in memory.")
+                        print("BackgroundTimer: Failed to repeat, most probably because the BackgroundTimer instance is de-allocated. Make sure you keep a reference to the BackgroundTimer instance in memory.")
                         UIApplication.shared.endBackgroundTask(backgroundTaskId) // Clearing
                     }
                 } else {
@@ -94,7 +96,7 @@ final class BackgroundTimer {
         guard Thread.isMainThread else {
             return assertionFailure()
         }
-        print("Aborting task \(backgroundTaskId)")
+        print("BackgroundTimer: Aborting task \(backgroundTaskId)")
         UIApplication.shared.endBackgroundTask(backgroundTaskId)
         delegate?.backgroundTimerTaskCanceled(task: backgroundTaskId)
         tasksToCancel.remove(backgroundTaskId)

@@ -45,9 +45,8 @@ final class ViewController: UIViewController {
             print("Invalid timer interval value")
             return
         }
-        print("Starting \(interval) seconds countdown.")
+        
         let taskID = timer.executeAfterDelay(delay: interval, repeating: repeatingSwitch.isOn) {
-            print("\(interval) seconds have passed, executing code block.")
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
         tasks += [taskID]
