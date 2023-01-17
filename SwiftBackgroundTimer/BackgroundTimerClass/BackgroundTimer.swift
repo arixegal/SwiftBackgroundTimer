@@ -14,7 +14,7 @@ protocol BackgroundTimerDelegate: AnyObject {
 
 final class BackgroundTimer {    
     weak var delegate: BackgroundTimerDelegate?
-    private var tasksToCancel: Set<UIBackgroundTaskIdentifier> = [] // To do: thread safety, will think about it later
+    private var tasksToCancel: Set<UIBackgroundTaskIdentifier> = [] // Not thread safe, access with care
     
     init(delegate: BackgroundTimerDelegate?) {
         self.delegate = delegate
@@ -36,21 +36,27 @@ final class BackgroundTimer {
     }
     
     func cancelExecution(tasks: [UIBackgroundTaskIdentifier]) {
+        guard Thread.isMainThread else {
+            return assertionFailure()
+        }
+        
         tasks.forEach {
             tasksToCancel.insert($0)
         }
     }
     
     private func wait(delay: TimeInterval, repeating: Bool, backgroundTaskId: UIBackgroundTaskIdentifier, completion: @escaping(()->Void)) {
+        guard Thread.isMainThread else {
+            return assertionFailure()
+        }
+
         guard !tasksToCancel.contains(backgroundTaskId) else {
-            print("Aborting task \(backgroundTaskId)")
-            delegate?.backgroundTimerTaskCanceled(task: backgroundTaskId)
-            return
+            return cancel(backgroundTaskId: backgroundTaskId)
         }
 
         let startTime = Date()
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async { [weak self] in
             // Waiting
             while Date().timeIntervalSince(startTime) < delay {
                 Thread.sleep(forTimeInterval: 0.1)
@@ -58,16 +64,14 @@ final class BackgroundTimer {
             
             // Executing
             DispatchQueue.main.async { [weak self] in
-                let tasksToCancel = self?.tasksToCancel ?? []
-                guard !tasksToCancel.contains(backgroundTaskId) else {
-                    print("Aborting task \(backgroundTaskId)")
-                    UIApplication.shared.endBackgroundTask(backgroundTaskId) // Clearing
-                    self?.delegate?.backgroundTimerTaskCanceled(task: backgroundTaskId)
+                guard !(self?.tasksToCancel ?? []).contains(backgroundTaskId) else {
+                    self?.cancel(backgroundTaskId: backgroundTaskId)
                     return
                 }
 
                 completion()
                 self?.delegate?.backgroundTimerTaskExecuted(task: backgroundTaskId, willRepeat: repeating)
+                
                 if repeating {
                     if let self {
                         self.wait(delay: delay,
@@ -84,5 +88,15 @@ final class BackgroundTimer {
                 }
             }
         }
+    }
+    
+    private func cancel(backgroundTaskId: UIBackgroundTaskIdentifier) {
+        guard Thread.isMainThread else {
+            return assertionFailure()
+        }
+        print("Aborting task \(backgroundTaskId)")
+        UIApplication.shared.endBackgroundTask(backgroundTaskId)
+        delegate?.backgroundTimerTaskCanceled(task: backgroundTaskId)
+        tasksToCancel.remove(backgroundTaskId)
     }
 }
