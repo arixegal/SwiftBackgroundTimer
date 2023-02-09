@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var delayAsString: String = "5"
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        VStack() {
+            HStack() {
+                Text("Delay in seconds:")
+                TextField(
+                    "",
+                    text: $delayAsString
+                )
+                .padding(EdgeInsets(top: 3, leading: 3, bottom: 3, trailing: 3))
+                .border(.tertiary)
+                .keyboardType(.numberPad)
+
+            }
+            .padding(40)
         }
-        .padding()
     }
 }
 
