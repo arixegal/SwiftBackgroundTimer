@@ -24,6 +24,9 @@ struct ContentView: View {
                 .border(.tertiary)
                 .keyboardType(.numberPad)
                 .focused($isFocused)
+                Button("Go") {
+                    print("Button tapped!")
+                }
             }
             .padding(40)
         }
