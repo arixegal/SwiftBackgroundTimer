@@ -10,9 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var delayAsString: String = "5"
     @State private var isInputValid = true
-
     @FocusState private var isFocused
-
 
     var body: some View {
         VStack() {
@@ -30,7 +28,7 @@ struct ContentView: View {
                 .onChange(of: delayAsString) { newValue in
                     isInputValid = TimeInterval(delayAsString) != nil
                 }
-                
+
                 Button("Go") {
                     print("Button tapped!")
                 }
@@ -39,9 +37,7 @@ struct ContentView: View {
             .padding(40)
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                self.isFocused = true
-            }
+                isFocused = true
         }
     }
 }
