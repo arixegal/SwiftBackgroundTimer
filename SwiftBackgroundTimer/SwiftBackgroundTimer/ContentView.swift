@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var delayAsString: String = "5"
+    @FocusState private var isFocused
+
 
     var body: some View {
         VStack() {
@@ -21,9 +23,14 @@ struct ContentView: View {
                 .padding(EdgeInsets(top: 3, leading: 3, bottom: 3, trailing: 3))
                 .border(.tertiary)
                 .keyboardType(.numberPad)
-
+                .focused($isFocused)
             }
             .padding(40)
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.isFocused = true
+            }
         }
     }
 }
