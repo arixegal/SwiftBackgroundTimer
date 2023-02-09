@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var delayAsString: String = "5"
+    @State private var isInputValid = true
+
     @FocusState private var isFocused
 
 
@@ -16,6 +18,7 @@ struct ContentView: View {
         VStack() {
             HStack() {
                 Text("Delay in seconds:")
+                
                 TextField(
                     "",
                     text: $delayAsString
@@ -24,9 +27,14 @@ struct ContentView: View {
                 .border(.tertiary)
                 .keyboardType(.numberPad)
                 .focused($isFocused)
+                .onChange(of: delayAsString) { newValue in
+                    isInputValid = TimeInterval(delayAsString) != nil
+                }
+                
                 Button("Go") {
                     print("Button tapped!")
                 }
+                .disabled(isInputValid == false)
             }
             .padding(40)
         }
