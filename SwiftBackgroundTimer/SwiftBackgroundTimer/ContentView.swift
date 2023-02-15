@@ -13,7 +13,28 @@ struct ContentView: View {
     @FocusState private var isFocused
 
     var body: some View {
-        VStack() {
+        VStack(spacing: 0) {
+            let rowPadding = EdgeInsets(top: 4, leading: 40, bottom: 4, trailing: 40)
+            HStack() {
+                Text("Delay in seconds:")
+                TextField(
+                    "",
+                    text: $delayAsString
+                )
+                .padding(EdgeInsets(top: 3, leading: 3, bottom: 3, trailing: 3))
+                .border(.tertiary)
+                .keyboardType(.numberPad)
+                .focused($isFocused)
+                .onChange(of: delayAsString) { newValue in
+                    isInputValid = TimeInterval(delayAsString) != nil
+                }
+
+                Button("Go") {
+                    print("Button tapped!")
+                }
+                .disabled(isInputValid == false)
+            }
+            .padding(rowPadding)
             HStack() {
                 Text("Delay in seconds:")
                 
@@ -34,7 +55,7 @@ struct ContentView: View {
                 }
                 .disabled(isInputValid == false)
             }
-            .padding(40)
+            .padding(rowPadding)
         }
         .onAppear {
                 isFocused = true
