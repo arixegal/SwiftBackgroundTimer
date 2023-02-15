@@ -35,25 +35,9 @@ struct ContentView: View {
                 .disabled(isInputValid == false)
             }
             .padding(rowPadding)
-            HStack() {
-                Text("Delay in seconds:")
-                
-                TextField(
-                    "",
-                    text: $delayAsString
-                )
-                .padding(EdgeInsets(top: 3, leading: 3, bottom: 3, trailing: 3))
-                .border(.tertiary)
-                .keyboardType(.numberPad)
-                .focused($isFocused)
-                .onChange(of: delayAsString) { newValue in
-                    isInputValid = TimeInterval(delayAsString) != nil
-                }
-
-                Button("Go") {
-                    print("Button tapped!")
-                }
-                .disabled(isInputValid == false)
+            HStack(alignment: .bottom) {
+                Text("Repeating:")
+                Spacer()
             }
             .padding(rowPadding)
         }
