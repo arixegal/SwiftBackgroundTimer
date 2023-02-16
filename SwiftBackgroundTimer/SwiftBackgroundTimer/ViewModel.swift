@@ -11,6 +11,7 @@ extension ContentView {
     @MainActor
     final class ViewModel: ObservableObject {
         @Published var delayAsString: String = "5"
-
+        @Published var shouldRepeat = false
+        @Published var isInputValid = true
     }
 }

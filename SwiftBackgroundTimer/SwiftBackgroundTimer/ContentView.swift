@@ -9,9 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = ViewModel()
-    @State private var isInputValid = true
-    @State private var shouldRepeat = false
-
     @FocusState private var isFocused
 
     var body: some View {
@@ -26,17 +23,17 @@ struct ContentView: View {
                     .keyboardType(.numberPad)
                     .focused($isFocused)
                     .onChange(of: viewModel.delayAsString) { newValue in
-                        isInputValid = TimeInterval(viewModel.delayAsString) != nil
+                        viewModel.isInputValid = TimeInterval(viewModel.delayAsString) != nil
                     }
 
                 Button("Go") {
                     print("Button tapped!")
                 }
-                    .disabled(isInputValid == false)
+                    .disabled(viewModel.isInputValid == false)
             }
                 .padding(rowPadding)
 
-            Toggle("Repeating:", isOn: $shouldRepeat)
+            Toggle("Repeating:", isOn: $viewModel.shouldRepeat)
                 .padding(rowPadding)
         }
             .onAppear {
