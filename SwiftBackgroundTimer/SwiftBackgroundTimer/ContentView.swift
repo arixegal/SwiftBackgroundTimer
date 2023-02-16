@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var delayAsString: String = "5"
     @State private var isInputValid = true
+    @State private var shouldRepeat = false
+
     @FocusState private var isFocused
 
     var body: some View {
@@ -17,33 +19,29 @@ struct ContentView: View {
             let rowPadding = EdgeInsets(top: 4, leading: 40, bottom: 4, trailing: 40)
             HStack() {
                 Text("Delay in seconds:")
-                TextField(
-                    "",
-                    text: $delayAsString
-                )
-                .padding(EdgeInsets(top: 3, leading: 3, bottom: 3, trailing: 3))
-                .border(.tertiary)
-                .keyboardType(.numberPad)
-                .focused($isFocused)
-                .onChange(of: delayAsString) { newValue in
-                    isInputValid = TimeInterval(delayAsString) != nil
-                }
+                
+                TextField("", text: $delayAsString)
+                    .padding(EdgeInsets(top: 3, leading: 3, bottom: 3, trailing: 3))
+                    .border(.tertiary)
+                    .keyboardType(.numberPad)
+                    .focused($isFocused)
+                    .onChange(of: delayAsString) { newValue in
+                        isInputValid = TimeInterval(delayAsString) != nil
+                    }
 
                 Button("Go") {
                     print("Button tapped!")
                 }
-                .disabled(isInputValid == false)
+                    .disabled(isInputValid == false)
             }
-            .padding(rowPadding)
-            HStack(alignment: .bottom) {
-                Text("Repeating:")
-                Spacer()
-            }
-            .padding(rowPadding)
+                .padding(rowPadding)
+
+            Toggle("Repeating:", isOn: $shouldRepeat)
+                .padding(rowPadding)
         }
-        .onAppear {
+            .onAppear {
                 isFocused = true
-        }
+            }
     }
 }
 
