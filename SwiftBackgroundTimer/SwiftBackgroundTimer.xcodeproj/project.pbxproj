@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE02904B299E2FCA00082F42 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE02904A299E2FCA00082F42 /* ViewModel.swift */; };
+		DE02904E299E307700082F42 /* BackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE02904D299E307700082F42 /* BackgroundTimer.swift */; };
 		DE22099A2993E84D00691189 /* SwiftBackgroundTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2209992993E84D00691189 /* SwiftBackgroundTimerApp.swift */; };
 		DE22099C2993E84D00691189 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22099B2993E84D00691189 /* ContentView.swift */; };
 		DE22099E2993E84E00691189 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE22099D2993E84E00691189 /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE02904A299E2FCA00082F42 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		DE02904D299E307700082F42 /* BackgroundTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTimer.swift; sourceTree = "<group>"; };
 		DE2209962993E84D00691189 /* SwiftBackgroundTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftBackgroundTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2209992993E84D00691189 /* SwiftBackgroundTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBackgroundTimerApp.swift; sourceTree = "<group>"; };
 		DE22099B2993E84D00691189 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -33,6 +37,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE02904C299E306600082F42 /* BackgroundTimerClass */ = {
+			isa = PBXGroup;
+			children = (
+				DE02904D299E307700082F42 /* BackgroundTimer.swift */,
+			);
+			path = BackgroundTimerClass;
+			sourceTree = "<group>";
+		};
 		DE22098D2993E84D00691189 = {
 			isa = PBXGroup;
 			children = (
@@ -52,9 +64,11 @@
 		DE2209982993E84D00691189 /* SwiftBackgroundTimer */ = {
 			isa = PBXGroup;
 			children = (
+				DE02904C299E306600082F42 /* BackgroundTimerClass */,
 				DE2209A72993EC6700691189 /* Info.plist */,
 				DE2209992993E84D00691189 /* SwiftBackgroundTimerApp.swift */,
 				DE22099B2993E84D00691189 /* ContentView.swift */,
+				DE02904A299E2FCA00082F42 /* ViewModel.swift */,
 				DE22099D2993E84E00691189 /* Assets.xcassets */,
 				DE22099F2993E84E00691189 /* Preview Content */,
 			);
@@ -140,6 +154,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE22099C2993E84D00691189 /* ContentView.swift in Sources */,
+				DE02904E299E307700082F42 /* BackgroundTimer.swift in Sources */,
+				DE02904B299E2FCA00082F42 /* ViewModel.swift in Sources */,
 				DE22099A2993E84D00691189 /* SwiftBackgroundTimerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
