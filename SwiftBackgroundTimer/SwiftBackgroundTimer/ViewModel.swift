@@ -5,10 +5,12 @@
 //  Created by Arik Segal on 16/02/2023.
 //
 
-import Foundation
+import SwiftUI
 
 extension ContentView {
     @MainActor
-    private final class ViewModel: ObservableObject {
+    final class ViewModel: ObservableObject {
+        @Published var delayAsString: String = "5"
+
     }
 }
