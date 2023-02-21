@@ -28,6 +28,7 @@ struct ContentView: View {
 
                 Button("Go") {
                     print("Button tapped!")
+                    viewModel.addTask()
                 }
                     .disabled(viewModel.isInputValid == false)
             }
