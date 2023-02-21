@@ -15,9 +15,9 @@ final class ViewController: UIViewController {
     @IBOutlet private var constTVHeight: NSLayoutConstraint!
     @IBOutlet private var tableView: UITableView!
     
-    var tasks: [UIBackgroundTaskIdentifier] = []
-    lazy var timer = BackgroundTimer(delegate: self)
-    var interval: TimeInterval? {
+    private var tasks: [UIBackgroundTaskIdentifier] = []
+    private lazy var timer = BackgroundTimer(delegate: self)
+    private var interval: TimeInterval? {
         guard let text = textField.text,
               !text.isEmpty else {
             return nil
