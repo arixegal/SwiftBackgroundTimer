@@ -14,6 +14,12 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             let rowPadding = EdgeInsets(top: 4, leading: 40, bottom: 4, trailing: 40)
+            
+            List(viewModel.tasks) {_ in
+                Button("Waiting to execute (tap to cancel)") {
+                    
+                }
+            }
             HStack() {
                 Text("Delay in seconds:")
                 

@@ -8,13 +8,18 @@
 import AudioToolbox
 import SwiftUI
 
+struct TaskItem: Identifiable {
+    let task: UIBackgroundTaskIdentifier
+    let id = UUID()
+}
+
 extension ContentView {
     @MainActor
     final class ViewModel: ObservableObject {
         @Published var delayAsString: String = "5"
         @Published var shouldRepeat = false
         @Published var isInputValid = true
-        @Published private(set) var tasks: [UIBackgroundTaskIdentifier] = []
+        @Published private(set) var tasks: [TaskItem] = []
         lazy private var timer = BackgroundTimer(delegate: self)
 
         private var interval: TimeInterval? {
@@ -30,7 +35,7 @@ extension ContentView {
             let taskID = timer.executeAfterDelay(delay: interval, repeating: shouldRepeat) {
                 AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             }
-            tasks += [taskID]
+            tasks += [TaskItem(task: taskID)]
             // Update UI
         }
     }
@@ -42,7 +47,7 @@ extension ContentView.ViewModel: BackgroundTimerDelegate {
             return
         }
         
-        guard let row = tasks.firstIndex(of: task) else {
+        guard let row = tasks.firstIndex(where: {$0.task == task}) else {
             return assertionFailure()
         }
         
