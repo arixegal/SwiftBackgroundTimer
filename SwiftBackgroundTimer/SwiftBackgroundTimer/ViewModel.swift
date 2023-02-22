@@ -14,11 +14,11 @@ extension ContentView {
         @Published var delayAsString: String = "5"
         @Published var shouldRepeat = false
         @Published var isInputValid = true
-        private var tasks: [UIBackgroundTaskIdentifier] = []
+        @Published private(set) var tasks: [UIBackgroundTaskIdentifier] = []
         lazy private var timer = BackgroundTimer(delegate: self)
 
         private var interval: TimeInterval? {
-            return TimeInterval(delayAsString)
+            TimeInterval(delayAsString)
         }
 
         func addTask() {
