@@ -18,10 +18,12 @@ struct ContentView: View {
             List(viewModel.tasks) {
                 let item = $0
                 Button("Waiting to execute (tap to cancel)") {
-                    viewModel.remove(item: item)
+                    withAnimation {
+                        viewModel.remove(item: item)
+                    }
                 }
-
             }
+            
             HStack() {
                 Text("Delay in seconds:")
                 
@@ -36,7 +38,9 @@ struct ContentView: View {
 
                 Button("Go") {
                     print("Button tapped!")
-                    viewModel.addTask()
+                    withAnimation {
+                        viewModel.addTask()
+                    }
                 }
                     .disabled(viewModel.isInputValid == false)
             }

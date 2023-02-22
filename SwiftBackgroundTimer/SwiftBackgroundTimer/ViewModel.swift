@@ -63,7 +63,8 @@ extension ContentView.ViewModel: BackgroundTimerDelegate {
             return assertionFailure()
         }
         
-        tasks.remove(at: row)
-        // Update UI
+        _ = withAnimation {
+            tasks.remove(at: row)
+        }
     }
 }
