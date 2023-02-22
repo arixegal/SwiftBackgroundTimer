@@ -38,6 +38,11 @@ extension ContentView {
             tasks += [TaskItem(task: taskID)]
             // Update UI
         }
+        
+        func remove(item: TaskItem) {
+            timer.cancelExecution(tasks: [item.task])
+            removeFromUI(task: item.task)
+        }
     }
 }
 
@@ -47,14 +52,18 @@ extension ContentView.ViewModel: BackgroundTimerDelegate {
             return
         }
         
+        removeFromUI(task: task)
+    }
+    
+    func backgroundTimerTaskCanceled(task: UIBackgroundTaskIdentifier) {
+    }
+    
+    private func removeFromUI(task: UIBackgroundTaskIdentifier) {
         guard let row = tasks.firstIndex(where: {$0.task == task}) else {
             return assertionFailure()
         }
         
         tasks.remove(at: row)
         // Update UI
-    }
-    
-    func backgroundTimerTaskCanceled(task: UIBackgroundTaskIdentifier) {
     }
 }
